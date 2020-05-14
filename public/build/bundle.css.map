@@ -1,0 +1,12 @@
+{
+  "version": 3,
+  "file": "bundle.css",
+  "sources": [
+    "../../App.svelte"
+  ],
+  "sourcesContent": [
+    "<script>\n\n//context menu\nconst { remote } = require('electron')\nconst { Menu, MenuItem } = remote\n\nlet info = 'nothing happening'\n\nconst menu = new Menu()\nmenu.append(new MenuItem({ label: 'MenuItem1', click() { info = 'item 1 clicked' } }))\nmenu.append(new MenuItem({ type: 'separator' }))\nmenu.append(new MenuItem({ label: 'MenuItem2', click() { info = 'item 2 clicked' } } ))\n\nwindow.addEventListener('contextmenu', (e) => {\n  e.preventDefault()\n  menu.popup({ window: remote.getCurrentWindow() })\n}, false)\n\n//notifications\nconst showNotification = () => {\n\tlet myNotification = new Notification('Hello', {\n\tbody: 'You are now officially part of the system'\n\t})\n\tmyNotification.onclick = () => {\n\t\tconsole.log('Notification clicked')\n\t}\n}\nconst amIOnline = () => {\n\twindow.alert(navigator.onLine ? 'you\\'re online sirs' : 'you\\'re offline')\n}\n\nlet m = { x: 0, y: 0 }\nfunction handleMousemove(event) {\n\tm.x = event.clientX;\n\tm.y = event.clientY;\n}\n\n\n</script>\n\n<svelte:head>\n\t<title>The Basics</title>\n</svelte:head>\n<main on:mousemove={handleMousemove}>\n\t<h1>Svelte-Electron</h1>\n\t<p>Let's do stuff</p>\n\t<button on:click={showNotification}>show system notifications</button>\n\t<button on:click={amIOnline}>Am I online?</button>\n\t<hr>\n\t<h5>{info}</h5>\n\t<h5>The mouse position is {m.x} x {m.y}</h5>\n</main>\n\n<style>\n\t:global(body, html){margin:0;padding:0;}\n\t:global(*){box-sizing:border-box;}\n\tmain {\n\t\ttext-align: center;\n\t\tpadding: 1em;\n\t\theight:100vh;\n\t}\n\th1 {\n\t\tcolor: #ff3e00;\n\t\ttext-transform: uppercase;\n\t\tfont-size: 4em;\n\t\tfont-weight: 100;\n\t}\n\t@media (min-width: 640px) {\n\t\tmain {\n\t\t\tmax-width: none;\n\t\t}\n\t}\n</style>"
+  ],
+  "names": [],
+  "mappings": "AAsDS,UAAU,AAAC,CAAC,OAAO,CAAC,CAAC,QAAQ,CAAC,AAAC,CAAC,AAChC,CAAC,AAAC,CAAC,WAAW,UAAU,AAAC,CAAC,AAClC,IAAI,cAAC,CAAC,AACL,UAAU,CAAE,MAAM,CAClB,OAAO,CAAE,GAAG,CACZ,OAAO,KAAK,AACb,CAAC,AACD,EAAE,cAAC,CAAC,AACH,KAAK,CAAE,OAAO,CACd,cAAc,CAAE,SAAS,CACzB,SAAS,CAAE,GAAG,CACd,WAAW,CAAE,GAAG,AACjB,CAAC,AACD,MAAM,AAAC,YAAY,KAAK,CAAC,AAAC,CAAC,AAC1B,IAAI,cAAC,CAAC,AACL,SAAS,CAAE,IAAI,AAChB,CAAC,AACF,CAAC"
+}
